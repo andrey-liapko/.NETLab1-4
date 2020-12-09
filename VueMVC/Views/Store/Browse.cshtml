@@ -1,0 +1,20 @@
+﻿@model VueMVC.Models.Category
+@using System.Web.Optimization
+@using Newtonsoft.Json;
+@{
+    ViewBag.Title = "Browse";
+}
+
+
+<div id="store">
+    <browse-component name=@Model.Name
+                      details-url="@Url.Action("Details")"
+                      :arr-items="@JsonConvert.SerializeObject(Model.Items, Formatting.Indented,
+    new JsonSerializerSettings() {
+        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+    }
+)"></browse-component>
+</div>
+@section scripts {
+    @Scripts.Render("~/Scripts/bundle/store.js")
+}

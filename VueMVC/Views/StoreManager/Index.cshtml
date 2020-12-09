@@ -1,0 +1,81 @@
+﻿@model VueMVC.Models.CategoryTitleSearch
+@using Newtonsoft.Json;
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", new object { }, new { @class = "btn btn-default" })
+</p>
+<form asp-controller="StoreManager" asp-action="Index" method="get">
+    <p>
+        Category: <select asp-for="categoryFurniture" name="categoryFurniture" asp-items="@JsonConvert.SerializeObject(Model.Categori.Items)">
+            <option value="">All</option>
+            @foreach (var item in Model.Categori.Items)
+            {
+
+                <option>@item</option>
+            }
+        </select>
+        Producer: <select asp-for="producerFurniture" name="producerFurniture" asp-items="@JsonConvert.SerializeObject(Model.Producer.Items)">
+            <option value="">All</option>
+            @foreach (var item in Model.Producer.Items)
+            {
+
+                <option>@item</option>
+            }
+        </select>
+        Title: <input type="text" name="SearchString">
+        Price: From <input type="number" name="fromPrice">
+        To <input type="number" name="toPrice">
+        <input type="submit" value="Filter" class="btn btn-default"/>
+
+    </p>
+</form>
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Category", "Index", new { sortOrder = Model.CategorySortParm })
+          
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Names[0].Producer)
+        </th>
+        <th>
+            @Html.ActionLink("Title", "Index", new { sortOrder = Model.TitleSortParm })
+        </th>
+        <th>
+            @Html.ActionLink("Price", "Index", new { sortOrder = Model.PriceSortParm })
+
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Names)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producer.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+
+            <td>
+           @Html.ActionLink("Edit", "Edit", new { id = item.ItemId }, new { @class = "btn btn-default" })
+@Html.ActionLink("Details", "Details", new { id = item.ItemId }, new { @class = "btn btn-default" })
+         @Html.ActionLink("Delete", "Delete", new { id = item.ItemId }, new { @class = "btn btn-default" })
+            </td>
+        </tr>
+    }
+
+</table>

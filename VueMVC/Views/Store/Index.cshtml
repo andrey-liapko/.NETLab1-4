@@ -1,0 +1,17 @@
+﻿@model IEnumerable<VueMVC.Models.Category>
+@using Newtonsoft.Json;
+@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="store">
+    <index-component edit-url="@Url.Action("Browse")"
+                     count=@Model.Count()
+                     :arr-category="@JsonConvert.SerializeObject(Model)"></index-component>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/bundle/store.js")
+}
